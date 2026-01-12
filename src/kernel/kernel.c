@@ -1,6 +1,7 @@
 #include <terminal_io.h>
 #include <paging.h>
 #include <allocators.h>
+#include <terminal_io.h>
 
 #define PIC1_DATA_PORT 0x21
 
@@ -9,6 +10,16 @@
     __asm__ __volatile__("mov %%eax, %0" : "=r"(_val)); \
     printf("Current EAX: 0x%x\n", _val); \
 })
+
+static inline uint8_t inb(uint16_t port) {
+    uint8_t ret;
+    __asm__ __volatile__("inb %1, %0" : "=a"(ret) : "Nd"(port));
+    return ret;
+}
+
+static inline void outb(uint16_t port, uint8_t value) {
+    __asm__ __volatile__("outb %0, %1" : : "a"(value), "Nd"(port));
+}
 
 void mask_timer() {
     // 1. Read the current mask
