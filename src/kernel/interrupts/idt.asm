@@ -126,7 +126,6 @@ isr_3_asm:
     iret
 
 extern syscall_echo_isr
-
 global syscall_echo_stub
 
 syscall_echo_stub:

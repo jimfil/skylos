@@ -99,16 +99,17 @@ void kernel_low() {
     */
 
     // --- TEST 3: Software Interrupt (Manual) ---
-    // __asm__ volatile("int $0x03"); 
-
+    //__asm__ volatile("int $0x03"); 
     PRINT_EAX();
     
-    // syscall_echo('k');
+    
+    syscall_echo('L');
+    syscall_echo('9');
     
     kprint("[LOW KERNEL] System active. Press keys to test Keyboard (IRQ 1).\n");
 
     // Jump to Higher Half Kernel (Optional, or stay here for testing)
-    // asm volatile("jmp *%0" :: "r"(hh_kernel));
+    //asm volatile("jmp *%0" :: "r"(hh_kernel));
 
     while(1) {
         // CPU halt loop to save energy while waiting for interrupts

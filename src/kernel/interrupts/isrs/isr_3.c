@@ -7,6 +7,7 @@ typedef struct {
     uint32_t eip, cs, eflags;                        // Pushed by CPU
 } registers_t;
 
+
 void isr_3(registers_t *regs) {
     printf("\n=== DEBUG BREAKPOINT ===\n");
     kprint("EAX: "); printf("%x\n", regs->eax);
@@ -15,5 +16,7 @@ void isr_3(registers_t *regs) {
     kprint("System Halted for inspection.\n");
     printf("=== DEBUG BREAKPOINT END ===\n");
     // modify eax here
+    regs->eax = 0x67;
+    kprint("changed EAX: "); printf("%x\n", regs->eax);
     return;
 }

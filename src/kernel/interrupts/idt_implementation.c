@@ -14,6 +14,7 @@ extern void init_pic();
 extern void isr_32(); // Div Zero
 extern void isr_14(); // Page Fault
 extern void isr_3();  // Debug Breakpoint
+extern void syscall_echo_stub();
 
 // 4. Import IRQ Handlers (ASM wrappers)
 // IMPORTANT: These match the 'irq_stub_X' names in idt.asm
@@ -56,7 +57,7 @@ void idt_init() {
     // We use the irq_stub_X addresses here
     helper(0x20, (uint32_t)irq_stub_0, 0x08, 0x8E); // Timer IRQ
     helper(0x21, (uint32_t)irq_stub_1, 0x08, 0x8E); // add the correct interrupt vector number for the keyboard interrupts
-
+    helper(0x80, (uint32_t)syscall_echo_stub, 0x08, 0xEE); //0xEE για να την καλούν και user programs
     // E. Load the IDT
     idt_load((uint32_t)&idt_ptr);
     return;
